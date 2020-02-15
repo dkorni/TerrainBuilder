@@ -1,0 +1,46 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+
+<div id='map' style='height: 600px;'></div>
+<button onclick="ChangeMap()" class="btn-primary" style="height: 30px; margin-top: 10px">ChangeMap</button>
+<button onclick="GrayScale()" class="btn-secondary" style="height: 30px; margin-top: 10px">GrayScale</button>
+<button onclick="GetImage()" class="btn-outline-success" style="height: 30px; margin-top: 10px">DownloadMap</button>
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZGVuaXNrMjAwMCIsImEiOiJjazRyaDVmNDQwcWVrM2dwNGQ0ZHQwdnd2In0.QBIPRRvLfwc6LvySuaJ1Ew';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/satellite-v9',
+        preserveDrawingBuffer: true
+    });
+
+    var currentMap = "satellite-v9";
+
+    function ChangeMap() {
+        if (currentMap == "satellite-v9") {
+            currentMap = "cjaudgl840gn32rnrepcb9b9g";
+        } else {
+            currentMap = "satellite-v9";
+        }
+        map.setStyle('mapbox://styles/mapbox/' + currentMap);
+    }
+
+    function GrayScale() {
+        map.setStyle('mapbox://styles/denisk2000/ck4rjo7os2qqt1co6bka6dbk0');
+    }
+
+    function GetImage() {
+        var img = map.getCanvas().toDataURL('image/png', 1.0).split(',')[1];
+        console.log(img);
+
+        var a = document.createElement("a"); //Create <a>
+        a.href = "data:image/png;base64," + img; //Image Base64 Goes here
+        a.download = "Image.png"; //File name Here
+        a.click(); //Downloaded file
+    }
+</script>
