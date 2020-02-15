@@ -7,16 +7,39 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
 
-<div id='map' style='height: 600px;'></div>
+<div id='map' style='width: 1024px; height: 600px;'></div>
 <button onclick="ChangeMap()" class="btn-primary" style="height: 30px; margin-top: 10px">ChangeMap</button>
 <button onclick="GrayScale()" class="btn-secondary" style="height: 30px; margin-top: 10px">GrayScale</button>
 <button onclick="GetImage()" class="btn-outline-success" style="height: 30px; margin-top: 10px">DownloadMap</button>
+<label for="latitudeLabel" style="display: inline-block">latitude</label>
+<input class="form-control" id="latInput" value="123" style="display: inline-block; width: 100px">
+<label for="longitudeLabel" style="display: inline-block">longitude</label>
+<input class="form-control" id="lonInput" value="123" style="display: inline-block; width: 100px">
+<label for="zoomLabel" style="display: inline-block">zoom</label>
+<input class="form-control" id="zoomInput" value="123" style="display: inline-block; width: 100px">
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoiZGVuaXNrMjAwMCIsImEiOiJjazRyaDVmNDQwcWVrM2dwNGQ0ZHQwdnd2In0.QBIPRRvLfwc6LvySuaJ1Ew';
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/satellite-v9',
         preserveDrawingBuffer: true
+    });
+
+    // geolocate control
+    var geolocate = new mapboxgl.GeolocateControl();
+    map.addControl(geolocate);
+
+    geolocate.on('geolocate', function (e) {
+        var lon = e.coords.longitude;
+        var lat = e.coords.latitude;
+        var position = [lon, lat];
+        console.log(position);
+    });
+
+    map.on('mouseup', function (e) {
+        var latlng = e.lngLat.wrap();
+        $("#lonInput").val(latlng.lng);
+        $("#latInput").val(latlng.lat);
     });
 
     var currentMap = "satellite-v9";
