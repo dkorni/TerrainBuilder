@@ -37,9 +37,9 @@
     });
 
     map.on('mouseup', function (e) {
-        var latlng = e.lngLat.wrap();
-        $("#lonInput").val(latlng.lng);
-        $("#latInput").val(latlng.lat);
+        // get current map coordinates and pass them to view controls
+        $("#lonInput").val(map.getCenter().lng);
+        $("#latInput").val(map.getCenter().lat);
     });
 
     var currentMap = "satellite-v9";
