@@ -17,53 +17,9 @@
 <input class="form-control" id="lonInput" value="123" style="display: inline-block; width: 100px">
 <label for="zoomLabel" style="display: inline-block">zoom</label>
 <input class="form-control" id="zoomInput" value="123" style="display: inline-block; width: 100px">
-<script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZGVuaXNrMjAwMCIsImEiOiJjazRyaDVmNDQwcWVrM2dwNGQ0ZHQwdnd2In0.QBIPRRvLfwc6LvySuaJ1Ew';
-    var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/satellite-v9',
-        preserveDrawingBuffer: true
-    });
-
-    // geolocate control
-    var geolocate = new mapboxgl.GeolocateControl();
-    map.addControl(geolocate);
-
-    geolocate.on('geolocate', function (e) {
-        var lon = e.coords.longitude;
-        var lat = e.coords.latitude;
-        var position = [lon, lat];
-        console.log(position);
-    });
-
-    map.on('mouseup', function (e) {
-        // get current map coordinates and pass them to view controls
-        $("#lonInput").val(map.getCenter().lng);
-        $("#latInput").val(map.getCenter().lat);
-    });
-
-    var currentMap = "satellite-v9";
-
-    function ChangeMap() {
-        if (currentMap == "satellite-v9") {
-            currentMap = "cjaudgl840gn32rnrepcb9b9g";
-        } else {
-            currentMap = "satellite-v9";
-        }
-        map.setStyle('mapbox://styles/mapbox/' + currentMap);
-    }
-
-    function GrayScale() {
-        map.setStyle('mapbox://styles/denisk2000/ck4rjo7os2qqt1co6bka6dbk0');
-    }
-
-    function GetImage() {
-        var img = map.getCanvas().toDataURL('image/png', 1.0).split(',')[1];
-        console.log(img);
-
-        var a = document.createElement("a"); //Create <a>
-        a.href = "data:image/png;base64," + img; //Image Base64 Goes here
-        a.download = "Image.png"; //File name Here
-        a.click(); //Downloaded file
-    }
-</script>
+<label for="loopsLabel" style="display: inline-block">loops</label>
+<input class="form-control" id="loopsInput" type="number" value="10" style="display: inline-block; width: 100px">
+<button onclick="GetImage()" class="btn-outline-success" style="height: 30px; margin-top: 10px">Start</button>
+<script src="js/Params.js"></script>
+<script src="js/MainController.js"></script>
+<link href='css/markers.css' rel='stylesheet' />

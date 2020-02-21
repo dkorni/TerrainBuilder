@@ -1,0 +1,8 @@
+﻿.marker {
+    background-image: url('../point.png');
+    background-size: cover;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+}
