@@ -2,8 +2,12 @@
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/satellite-v9',
-    preserveDrawingBuffer: true
+    preserveDrawingBuffer: true,
+    center: [32.4040917, 46.5311013],
+    zoom: baseZoom
 });
+
+UpdateControls();
 
 // geolocate control
 var geolocate = new mapboxgl.GeolocateControl();
@@ -17,16 +21,10 @@ geolocate.on('geolocate', function (e) {
 });
 
 map.on('mouseup', function (e) {
-    // get current map coordinates and pass them to view controls
-    longitude = map.getCenter().lng;
-    latitude = map.getCenter().lat;
-
-    $("#lonInput").val(longitude);
-    $("#latInput").val(latitude);
+    UpdateLatLngControls();
 });
 
 map.on('click', function (e) {
-
 
     var x = e.lngLat.wrap().lng;
     var y = e.lngLat.wrap().lat;
@@ -41,13 +39,18 @@ map.on('click', function (e) {
     new mapboxgl.Marker(el)
         .setLngLat([x,y])
         .addTo(map);
+
+    // todo add it like another function (to move to borders of screen by x and y)
+    var offset = (x - map.getCenter().lng);
+    x = x+offset;
+
+    map.setCenter([x, map.getCenter().lat]);
+    UpdateControls();
 });
 
 // get current zoom
 map.on('wheel', function (e) {
-    zoom = map.getZoom();
-
-    $("#zoomInput").val(zoom);
+    UpdateZoom();
 });
 
 var currentMap = "satellite-v9";
@@ -62,7 +65,7 @@ function ChangeMap() {
 }
 
 function GrayScale() {
-    map.setStyle('mapbox://styles/denisk2000/ck4rjo7os2qqt1co6bka6dbk0');
+    map.setStyle('mapbox://styles/denisk2000/ck6zan8ql33651iqtbk57l0lx');
 }
 
 function GetImage() {
@@ -76,11 +79,36 @@ function GetImage() {
 }
 
 function Start(loopsNumber) {
+    var center = map.getCenter();
+    var x = center.lat;
+    var y = center.lng;
+    
+    var newCenter = CalculateNewCoordinates(x,y,zoom);
+    map.setCenter([newCenter[0], map.getCenter().lat]);
     for (var i = 0; i < loopsNumber; i++) {
-        var center = map.getCenter();
-        var x = center.lng;
-        var y = center.ltd;
-
-        map.setCenter([x, y]);
+       
     }
+    UpdateControls();
+}
+
+function UpdateLatLngControls() {
+    // get current map coordinates and pass them to view controls
+    var longitude = map.getCenter().lng;
+    var latitude = map.getCenter().lat;
+
+    $("#lonInput").val(longitude);
+    $("#latInput").val(latitude);
+
+}
+
+function UpdateZoom() {
+
+    var zoom = map.getZoom();
+
+    $("#zoomInput").val(zoom);
+}
+
+function UpdateControls() {
+    UpdateLatLngControls();
+    UpdateZoom();
 }
