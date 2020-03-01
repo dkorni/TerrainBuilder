@@ -8,16 +8,26 @@
 <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
 
 <div id='map' style='width: 1024px; height: 600px;'></div>
-<button onclick="ChangeMap()" class="btn-primary" style="height: 30px; margin-top: 10px">ChangeMap</button>
-<button onclick="GrayScale()" class="btn-secondary" style="height: 30px; margin-top: 10px">GrayScale</button>
-<button onclick="GetImage()" class="btn-outline-success" style="height: 30px; margin-top: 10px">DownloadMap</button>
-<label for="latitudeLabel" style="display: inline-block">latitude</label>
-<input class="form-control" id="latInput" value="123" style="display: inline-block; width: 100px">
-<label for="longitudeLabel" style="display: inline-block">longitude</label>
-<input class="form-control" id="lonInput" value="123" style="display: inline-block; width: 100px">
-<label for="zoomLabel" style="display: inline-block">zoom</label>
-<input class="form-control" id="zoomInput" value="123" style="display: inline-block; width: 100px">
-<label for="loopsLabel" style="display: inline-block">loops</label>
-<input class="form-control" id="loopsInput" type="number" value="10" style="display: inline-block; width: 100px">
-<button onclick="Start()" class="btn-outline-success" style="height: 30px; margin-top: 10px">Start</button>
-<link href='css/markers.css' rel='stylesheet' />
+
+<div id="main_controls">
+    <button onclick="ChangeMap()" class="btn-primary" style="height: 30px; margin-top: 10px">ChangeMap</button>
+    <button onclick="GrayScale()" class="btn-secondary" style="height: 30px; margin-top: 10px">GrayScale</button>
+    <button onclick="GetImage()" class="btn-outline-success" style="height: 30px; margin-top: 10px">DownloadMap</button>
+    <label for="latitudeLabel" style="display: inline-block">latitude</label>
+    <input class="form-control" id="latInput" value="123" style="display: inline-block; width: 100px">
+    <label for="longitudeLabel" style="display: inline-block">longitude</label>
+    <input class="form-control" id="lonInput" value="123" style="display: inline-block; width: 100px">
+    <label for="zoomLabel" style="display: inline-block">zoom</label>
+    <input class="form-control" id="zoomInput" value="123" style="display: inline-block; width: 100px">
+    <label for="loopsLabel" style="display: inline-block">loops</label>
+    <input class="form-control" id="loopsInput" type="number" value="10" style="display: inline-block; width: 100px">
+    <button onclick="Start()" class="btn-outline-success" style="height: 30px; margin-top: 10px">Start</button>
+    <link href='css/markers.css' rel='stylesheet' />
+</div>
+
+<div id="controls">
+    <button onclick="Move(-1,0)" class="btn-primary" style="height: 30px; margin-top: 10px">Left</button>
+    <button onclick="Move(0,-1)" class="btn-secondary" style="height: 30px; margin-top: 10px">Up</button>
+    <button onclick="Move(0,1)" class="btn-secondary" style="height: 30px; margin-top: 10px">Down</button>
+    <button onclick="Move(1,0)" class="btn-outline-success" style="height: 30px; margin-top: 10px">Right</button>
+</div>

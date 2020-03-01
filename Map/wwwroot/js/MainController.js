@@ -40,11 +40,6 @@ map.on('click', function (e) {
         .setLngLat([x,y])
         .addTo(map);
 
-    // todo add it like another function (to move to borders of screen by x and y)
-    var offset = (x - map.getCenter().lng);
-    x = x+offset;
-
-    map.setCenter([x, map.getCenter().lat]);
     UpdateControls();
 });
 
@@ -65,7 +60,7 @@ function ChangeMap() {
 }
 
 function GrayScale() {
-    map.setStyle('mapbox://styles/denisk2000/ck6zan8ql33651iqtbk57l0lx');
+    map.setStyle('mapbox://styles/denisk2000/ck6zaukav230k1iqqqj3a1kg9');
 }
 
 function GetImage() {
@@ -76,6 +71,16 @@ function GetImage() {
     a.href = "data:image/png;base64," + img; //Image Base64 Goes here
     a.download = "Image.png"; //File name Here
     a.click(); //Downloaded file
+}
+
+function Move(xN, yN) {
+    var center = map.getCenter();
+    var x = center.lat;
+    var y = center.lng;
+
+    var newCenter = CalculateNewCoordinates(x, y, xN, yN, zoom);
+    map.setCenter([newCenter[0], newCenter[1]]);
+    UpdateControls();
 }
 
 function Start(loopsNumber) {
