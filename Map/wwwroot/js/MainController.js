@@ -3,7 +3,7 @@ var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/satellite-v9',
     preserveDrawingBuffer: true,
-    center: [32.4040917, 46.5311013],
+    center: [17.454700054970054, 61.09971030000003],
     zoom: baseZoom
 });
 
@@ -83,17 +83,17 @@ function Move(xN, yN) {
     UpdateControls();
 }
 
-function Start(loopsNumber) {
-    var center = map.getCenter();
-    var x = center.lat;
-    var y = center.lng;
-    
-    var newCenter = CalculateNewCoordinates(x,y,zoom);
-    map.setCenter([newCenter[0], map.getCenter().lat]);
-    for (var i = 0; i < loopsNumber; i++) {
-       
+async function Start(loopsNumber) {
+
+    for (var i = 0; i < 8; i++) {
+        for (var j = 0; j < 13; j++) {
+            await sleep(3000);
+            Move(0, -1 * Math.pow(-1,i));
+        }
+        await sleep(3000);
+        Move(1, 0);
     }
-    UpdateControls();
+
 }
 
 function UpdateLatLngControls() {
@@ -116,4 +116,8 @@ function UpdateZoom() {
 function UpdateControls() {
     UpdateLatLngControls();
     UpdateZoom();
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
